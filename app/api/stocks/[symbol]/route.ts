@@ -1,0 +1,11 @@
+import { NextResponse } from "next/server";
+import { getStockInfo } from "@/app/lib/stock";
+
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ symbol: string }> }
+) {
+  const { symbol } = await params;
+  const data = await getStockInfo(symbol);
+  return NextResponse.json(data);
+}
