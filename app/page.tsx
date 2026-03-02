@@ -276,175 +276,176 @@ export default function Home() {
 
   // --- Render Logic ---
 
-  // 결과 객체가 유효한지 확인
-  const isResultValid = currentResult !== null && currentResult.totalPayment > 0;
+  // 결과 객체가 유효한지 확인currentResult !==
+  //const isResultValid = null && currentResult.totalPayment > 0;
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 font-inter">
-      <div className="loan-calculator bg-white shadow-2xl rounded-xl p-8 w-full max-w-lg">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">대출금 계산기</h2>
+    <></>
+    // <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 font-inter">
+    //   <div className="loan-calculator bg-white shadow-2xl rounded-xl p-8 w-full max-w-lg">
+    //     <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">대출금 계산기</h2>
 
-        {/* 입력 섹션 */}
-        <div className="input-section space-y-5">
-          {/* 대출 원금 */}
+    //     {/* 입력 섹션 */}
+    //     <div className="input-section space-y-5">
+    //       {/* 대출 원금 */}
 
-          <LoanInputForm
-            label="대출 원금 (원)"
-            id="loan-amount"
-            placeholder="예: 50000000"
-            value={formatNumber(loanAmt)}
-            onChange={setChangeAmt}
-            type="text"
-            errorMessage={loanAmtError}
-          />
+    //       <LoanInputForm
+    //         label="대출 원금 (원)"
+    //         id="loan-amount"
+    //         placeholder="예: 50000000"
+    //         value={formatNumber(loanAmt)}
+    //         onChange={setChangeAmt}
+    //         type="text"
+    //         errorMessage={loanAmtError}
+    //       />
 
-          {/* 연 이자율 */}
+    //       {/* 연 이자율 */}
 
-          <LoanInputForm
-            label="연 이자율 (%)"
-            id="interest-rate"
-            placeholder="예: 4.5"
-            value={rate}
-            onChange={setChangeRate}
-            type="text"
-            errorMessage={rateError}
-          />
+    //       <LoanInputForm
+    //         label="연 이자율 (%)"
+    //         id="interest-rate"
+    //         placeholder="예: 4.5"
+    //         value={rate}
+    //         onChange={setChangeRate}
+    //         type="text"
+    //         errorMessage={rateError}
+    //       />
 
-          {/* 대출 기간 */}
-          <LoanInputForm
-            label="대출 기간 (년)"
-            id="loan-term"
-            placeholder="예: 10"
-            value={loanDur === 0 ? "" : loanDur}
-            onChange={setChangeLoanDur}
-            type="number"
-            min={1}
-            errorMessage={loanDurError}
-          />
+    //       {/* 대출 기간 */}
+    //       <LoanInputForm
+    //         label="대출 기간 (년)"
+    //         id="loan-term"
+    //         placeholder="예: 10"
+    //         value={loanDur === 0 ? "" : loanDur}
+    //         onChange={setChangeLoanDur}
+    //         type="number"
+    //         min={1}
+    //         errorMessage={loanDurError}
+    //       />
 
-          {/* 계산 버튼 */}
-          <button
-            id="calculate-btn"
-            onClick={setChangeResult}
-            className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            대출 상환액 계산하기
-          </button>
-        </div>
+    //       {/* 계산 버튼 */}
+    //       <button
+    //         id="calculate-btn"
+    //         onClick={setChangeResult}
+    //         className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+    //       >
+    //         대출 상환액 계산하기
+    //       </button>
+    //     </div>
 
-        {/* 결과 섹션 */}
-        {resultVisible && isResultValid && (
-          <div id="results-section" className="mt-8 pt-6 border-t border-gray-200 ">
-            {/* 결과 제목 및 토글 버튼 */}
-            <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
-              <h3 className="text-xl font-semibold text-gray-800">결과</h3>
-              <div className="flex rounded-lg bg-gray-200 p-1 space-x-1 shadow-inner text-sm">
-                {/* 원리금 균등 토글 버튼 */}
-                <button
-                  onClick={() => setCalculationType("level")}
-                  className={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ${
-                    calculationType === "level"
-                      ? "bg-white text-blue-600 shadow-md"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
-                  원리금균등
-                </button>
-                {/* 원금 균등 토글 버튼 */}
-                <button
-                  onClick={() => setCalculationType("equal")}
-                  className={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ${
-                    calculationType === "equal"
-                      ? "bg-white text-blue-600 shadow-md"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
-                  원금균등
-                </button>
-                {/* 만기 일시 토글 버튼 */}
-                <button
-                  onClick={() => setCalculationType("bullet")}
-                  className={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ${
-                    calculationType === "bullet"
-                      ? "bg-white text-blue-600 shadow-md"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
-                  만기일시
-                </button>
-              </div>
-            </div>
+    //     {/* 결과 섹션 */}
+    //     {resultVisible && isResultValid && (
+    //       <div id="results-section" className="mt-8 pt-6 border-t border-gray-200 ">
+    //         {/* 결과 제목 및 토글 버튼 */}
+    //         <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
+    //           <h3 className="text-xl font-semibold text-gray-800">결과</h3>
+    //           <div className="flex rounded-lg bg-gray-200 p-1 space-x-1 shadow-inner text-sm">
+    //             {/* 원리금 균등 토글 버튼 */}
+    //             <button
+    //               onClick={() => setCalculationType("level")}
+    //               className={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ${
+    //                 calculationType === "level"
+    //                   ? "bg-white text-blue-600 shadow-md"
+    //                   : "text-gray-600 hover:text-gray-900"
+    //               }`}
+    //             >
+    //               원리금균등
+    //             </button>
+    //             {/* 원금 균등 토글 버튼 */}
+    //             <button
+    //               onClick={() => setCalculationType("equal")}
+    //               className={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ${
+    //                 calculationType === "equal"
+    //                   ? "bg-white text-blue-600 shadow-md"
+    //                   : "text-gray-600 hover:text-gray-900"
+    //               }`}
+    //             >
+    //               원금균등
+    //             </button>
+    //             {/* 만기 일시 토글 버튼 */}
+    //             <button
+    //               onClick={() => setCalculationType("bullet")}
+    //               className={`px-3 py-1.5 rounded-md font-medium transition-all duration-300 ${
+    //                 calculationType === "bullet"
+    //                   ? "bg-white text-blue-600 shadow-md"
+    //                   : "text-gray-600 hover:text-gray-900"
+    //               }`}
+    //             >
+    //               만기일시
+    //             </button>
+    //           </div>
+    //         </div>
 
-            {/* 상환 방식별 상세 결과 표시 */}
-            <div className="space-y-3">
-              {/* 월별/첫 달/마지막 달 상환액 - 방식별 조건부 렌더링 */}
-              {calculationType === "level" && results.level ? (
-                // 원리금 균등 결과
-                <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg border border-blue-200">
-                  <span className="text-gray-700 font-medium">월별 상환액:</span>
-                  <span id="monthly-payment" className="text-xl font-bold text-blue-600">
-                    {formatNumber(results.level.monthlyPayment)} 원
-                  </span>
-                </div>
-              ) : calculationType === "equal" && results.equal ? (
-                // 원금 균등 결과
-                <>
-                  <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
-                    <span className="text-gray-700 font-medium">첫 달 상환액:</span>
-                    <span id="first-payment" className="text-xl font-bold text-red-600">
-                      {formatNumber(results.equal.firstMonthlyPayment)} 원
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
-                    <span className="text-gray-700 font-medium">마지막 달 상환액:</span>
-                    <span id="last-payment" className="text-xl font-bold text-red-600">
-                      {formatNumber(results.equal.lastMonthlyPayment)} 원
-                    </span>
-                  </div>
-                </>
-              ) : calculationType === "bullet" && results.bullet ? (
-                // 만기 일시 결과
-                <>
-                  <div className="flex justify-between items-center p-3 bg-indigo-50 rounded-lg border border-indigo-200">
-                    <span className="text-gray-700 font-medium">월 이자 납부액:</span>
-                    <span
-                      id="monthly-interest-payment"
-                      className="text-xl font-bold text-indigo-600"
-                    >
-                      {formatNumber(results.bullet.monthlyInterestPayment)} 원
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-indigo-50 rounded-lg border border-indigo-200">
-                    <span className="text-gray-700 font-medium">만기일 원금 상환액:</span>
-                    <span
-                      id="final-principal-payment"
-                      className="text-xl font-bold text-indigo-600"
-                    >
-                      {formatNumber(results.bullet.finalPrincipalPayment)} 원
-                    </span>
-                  </div>
-                </>
-              ) : null}
+    //         {/* 상환 방식별 상세 결과 표시 */}
+    //         <div className="space-y-3">
+    //           {/* 월별/첫 달/마지막 달 상환액 - 방식별 조건부 렌더링 */}
+    //           {calculationType === "level" && results.level ? (
+    //             // 원리금 균등 결과
+    //             <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+    //               <span className="text-gray-700 font-medium">월별 상환액:</span>
+    //               <span id="monthly-payment" className="text-xl font-bold text-blue-600">
+    //                 {formatNumber(results.level.monthlyPayment)} 원
+    //               </span>
+    //             </div>
+    //           ) : calculationType === "equal" && results.equal ? (
+    //             // 원금 균등 결과
+    //             <>
+    //               <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+    //                 <span className="text-gray-700 font-medium">첫 달 상환액:</span>
+    //                 <span id="first-payment" className="text-xl font-bold text-red-600">
+    //                   {formatNumber(results.equal.firstMonthlyPayment)} 원
+    //                 </span>
+    //               </div>
+    //               <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+    //                 <span className="text-gray-700 font-medium">마지막 달 상환액:</span>
+    //                 <span id="last-payment" className="text-xl font-bold text-red-600">
+    //                   {formatNumber(results.equal.lastMonthlyPayment)} 원
+    //                 </span>
+    //               </div>
+    //             </>
+    //           ) : calculationType === "bullet" && results.bullet ? (
+    //             // 만기 일시 결과
+    //             <>
+    //               <div className="flex justify-between items-center p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+    //                 <span className="text-gray-700 font-medium">월 이자 납부액:</span>
+    //                 <span
+    //                   id="monthly-interest-payment"
+    //                   className="text-xl font-bold text-indigo-600"
+    //                 >
+    //                   {formatNumber(results.bullet.monthlyInterestPayment)} 원
+    //                 </span>
+    //               </div>
+    //               <div className="flex justify-between items-center p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+    //                 <span className="text-gray-700 font-medium">만기일 원금 상환액:</span>
+    //                 <span
+    //                   id="final-principal-payment"
+    //                   className="text-xl font-bold text-indigo-600"
+    //                 >
+    //                   {formatNumber(results.bullet.finalPrincipalPayment)} 원
+    //                 </span>
+    //               </div>
+    //             </>
+    //           ) : null}
 
-              {/* 총 이자 (공통) */}
-              <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
-                <span className="text-gray-700 font-medium">총 이자:</span>
-                <span id="total-interest" className="text-lg font-bold text-green-600">
-                  {formatNumber(currentResult!.totalInterest)} 원
-                </span>
-              </div>
+    //           {/* 총 이자 (공통) */}
+    //           <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
+    //             <span className="text-gray-700 font-medium">총 이자:</span>
+    //             <span id="total-interest" className="text-lg font-bold text-green-600">
+    //               {formatNumber(currentResult!.totalInterest)} 원
+    //             </span>
+    //           </div>
 
-              {/* 총 상환액 (공통) */}
-              <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                <span className="text-gray-700 font-medium">총 상환액:</span>
-                <span id="total-payment" className="text-lg font-bold text-yellow-600">
-                  {formatNumber(currentResult!.totalPayment)} 원
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    //           {/* 총 상환액 (공통) */}
+    //           <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+    //             <span className="text-gray-700 font-medium">총 상환액:</span>
+    //             <span id="total-payment" className="text-lg font-bold text-yellow-600">
+    //               {formatNumber(currentResult!.totalPayment)} 원
+    //             </span>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     )}
+    //   </div>
+    // </div>
   );
 }
