@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import LoanInputForm from "../components/LoanInputForm";
 import { z, ZodError, ZodIssue } from "zod";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 // 원리금 균등 상환 결과 인터페이스
 interface IResultLevel {
@@ -48,6 +48,8 @@ const loanDurSchema = z.object({
 });
 
 export default function Home() {
+  //주식 화면으로 바로 이동
+  redirect("/stockList");
   // 숫자를 한국 통화 형식으로 포맷팅 (예: 1,000,000)
   const formatNumber = (num: number) => {
     if (num === null || num === undefined || isNaN(num)) {

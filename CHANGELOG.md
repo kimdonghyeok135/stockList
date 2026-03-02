@@ -17,4 +17,9 @@ All notable changes to this project will be documented in this file.
 ## [1.0.2]
 
 - 차트 그리기
-- 관련 뉴스 추가(변수명 다시 점검 필요)
+- 관련 뉴스 추가
+
+## [1.0.3]
+
+- 가격 알림 기능추가
+- API KEY 숨김 처리

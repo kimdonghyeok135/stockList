@@ -1,16 +1,19 @@
+const STOCK_API_KEY = process.env.FINNHUB_API_KEY;
+
 export async function getStockInfo(symbol: string) {
-  const API_KEY = "d53561pr01qggm5vard0d53561pr01qggm5vardg";
-  const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
+  const response = await fetch(
+    `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${STOCK_API_KEY}`
+  );
   const data = await response.json();
   return data;
 }
 
 export async function getStocksLists() {
   const symbols = ["AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "META", "TSLA", "AMD", "AVGO", "MU"];
-  const API_KEY = "d53561pr01qggm5vard0d53561pr01qggm5vardg";
+
   const callApi = symbols.map(async (symbol, index) => {
     const response = await fetch(
-      `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
+      `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${STOCK_API_KEY}`
     );
     const data = await response.json();
     return {
@@ -25,9 +28,8 @@ export async function getStocksLists() {
 }
 
 export async function getStockDetailInfo(symbol: string) {
-  const API_KEY = "d53561pr01qggm5vard0d53561pr01qggm5vardg";
   const response = await fetch(
-    `https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${API_KEY}`
+    `https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${STOCK_API_KEY}`
   );
   const data = await response.json();
   return data;

@@ -33,7 +33,7 @@ type Resolution = {
 export default function News({ symbol }: { symbol: string }) {
   const [newsCnt, setNewsCnt] = useState<number>(5);
   const [newsData, setNewsData] = useState<NewsTopProps>();
-  const [visibleCnt, setVisibleCnt] = useState<number>(2);
+  //const [visibleCnt, setVisibleCnt] = useState<number>(2);
   const [loading, setLoading] = useState<boolean>(true);
   const getNewsData = async () => {
     const res = await fetch(`/api/stocks/${symbol}/news?newsCnt=${newsCnt}`);

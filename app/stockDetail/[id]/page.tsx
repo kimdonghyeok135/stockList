@@ -1,11 +1,10 @@
-import { getStockDetailInfo, getStockInfo, getStockDataCandle } from "@/app/lib/stock";
+import { getStockDetailInfo, getStockInfo } from "@/app/lib/stock";
 
-import { Bell, ChevronRight, Share2 } from "lucide-react";
+import { Bell, Share2 } from "lucide-react";
 import Image from "next/image";
 import LikeButton from "./_components/LikeButton.client";
 import ActionPill from "./_components/ActionPill.client";
 import Metric from "./_components/Metric.client";
-import NewsRow from "./_components/NewsRow.client";
 import CandleStock from "./_components/CandleStock.client";
 import News from "./_components/News.client";
 
@@ -137,8 +136,20 @@ export default async function StockDetail({ params }: { params: Promise<{ id: st
 
       {/* Actions */}
       <div className="mt-4 grid grid-cols-2 gap-2">
-        <ActionPill icon={<Bell className="h-5 w-5" />} label="알림" />
-        <ActionPill icon={<Share2 className="h-5 w-5" />} label="공유" />
+        <ActionPill
+          icon={<Bell className="h-5 w-5" />}
+          label="알림"
+          symbol={id}
+          currentPrice={stockDetailPrice.c}
+        />
+
+        {/* 아래에서는 symbol이랑 currentPrice필요없음 */}
+        <ActionPill
+          icon={<Share2 className="h-5 w-5" />}
+          label="공유"
+          symbol={id}
+          currentPrice={stockDetailPrice.c}
+        />
       </div>
 
       {/* News Card */}
