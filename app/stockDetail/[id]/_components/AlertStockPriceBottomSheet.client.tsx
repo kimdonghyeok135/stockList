@@ -5,7 +5,7 @@ import { useState } from "react";
 type AlertBottomSheetProps = {
   open: boolean;
   onClose: () => void;
-  symbol: string;
+  symbol?: string | undefined;
   currentPrice?: number;
 };
 

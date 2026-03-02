@@ -5,10 +5,10 @@ import AlertStockPriceBottomSheet from "./AlertStockPriceBottomSheet.client";
 
 type ActionPillParams = {
   icon: React.ReactNode;
-  label: string;
+  label: "알림" | "공유";
   active?: boolean;
-  symbol: string;
-  currentPrice: number;
+  symbol?: string | undefined;
+  currentPrice?: number | undefined;
 };
 
 export default function ActionPill({
@@ -33,6 +33,14 @@ export default function ActionPill({
         onClick={() => {
           if (label === "알림") {
             setBottomOpen(true);
+          } else if (label === "공유") {
+            if (navigator.share) {
+              navigator.share({
+                title: `${symbol} 현재가 ${currentPrice}`,
+                text: `${symbol} 현재가 ${currentPrice}을 확인해보세요.`,
+                url: window.location.href,
+              });
+            }
           }
         }}
       >
