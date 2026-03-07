@@ -47,11 +47,11 @@ export default async function StockDetail({ params }: { params: Promise<{ id: st
   return (
     <div className="min-h-screen bg-[#1a2b3c] text-white p-4 font-sans">
       {/* Header (리스트 페이지 톤 유지) */}
-      <div className="flex justify-between items-center mb-6">
+      {/* <div className="flex justify-between items-center mb-6">
         <button className="text-sm border border-gray-600 px-3 py-1 rounded-full">Menu</button>
         <h1 className="text-xl font-bold tracking-widest">DETAIL</h1>
         <button className="text-sm border border-gray-600 px-3 py-1 rounded-full">Search</button>
-      </div>
+      </div> */}
 
       {/* Symbol Header */}
       <div className="flex items-center justify-between mb-4">
@@ -151,26 +151,6 @@ export default async function StockDetail({ params }: { params: Promise<{ id: st
           currentPrice={stockDetailPrice.c}
         />
       </div>
-
-      {/* News Card */}
-      {/* <div className="mt-4 rounded-3xl bg-white p-4 shadow-lg">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-extrabold text-gray-900">관련 뉴스</h3>
-          <ChevronRight className="h-5 w-5 text-[#4fd1c5]" />
-        </div>
-
-        <div className="mt-3 space-y-3">
-          <NewsRow
-            title="Meta releases new AI updates..."
-            meta="2시간 전 · Reuters"
-          />
-          <div className="h-px bg-gray-100" />
-          <NewsRow
-            title="Analysts revise price targets..."
-            meta="2시간 전 · Reuters"
-          />
-        </div>
-      </div> */}
       <News symbol={id} />
     </div>
   );

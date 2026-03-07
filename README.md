@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+프로젝트 한 줄 요약
 
-## Getting Started
+- Fintech / Data Visualization
 
-First, run the development server:
+데모 링크
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- https://stock-list-p82m.vercel.app/stockList
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+핵심 기능
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+종목 리스트, 검색, 정렬, 관심목록(persist)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+기술 스택
 
-## Learn More
+Next(App Router), React Query(v5), Zustand(persist), lightweight-charts, Yahoo Finance chart API, Finnhub quote API
 
-To learn more about Next.js, take a look at the following resources:
+아키텍처(간단 다이어그램)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+app routes / api routes / lib(fetchers) / store(zustand)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+React Query 설계
 
-## Deploy on Vercel
+queryKey, refetchInterval(5m), error/loading 전략
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+테스트
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+무엇을 왜 테스트했고(스토어/유틸/페이지), 어떤 도구를 썼는지
+
+트러블슈팅 & 개선
+
+“sort in-place 이슈 방지 위해 copy 후 sort 적용” 같은 식으로 실무 티 나게

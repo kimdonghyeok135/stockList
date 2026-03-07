@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
 import { useQuery } from "@tanstack/react-query";
 import { ArrowBigDown, Heart } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useLikelist } from "../store/likelist";
 import { toast } from "@/lib/toast";
+import { sortStocks } from "@/lib/stockSort";
 
 function StockSkeleton() {
   return (
@@ -26,14 +27,14 @@ function StockSkeleton() {
 }
 
 interface StockData {
-  c: number;   // Current price
-  d: number;   // Change
-  dp: number;  // Percent change
-  h: number;   // High price of the day
-  l: number;   // Low price of the day
-  o: number;   // Open price of the day
-  pc: number;  // Previous close price
-  t: number;   // Timestamp
+  c: number; // Current price
+  d: number; // Change
+  dp: number; // Percent change
+  h: number; // High price of the day
+  l: number; // Low price of the day
+  o: number; // Open price of the day
+  pc: number; // Previous close price
+  t: number; // Timestamp
 }
 
 interface StockItem {
@@ -42,73 +43,64 @@ interface StockItem {
   data: StockData;
 }
 
-export default function StockList(){
-  
+export default function StockList() {
   const [searchOpenModal, setSearchOpenModal] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [viewMode, setViewMode] = useState<"all" | "liked">("all");
   const [isUp, setIsUp] = useState(false);
-  const [sortState, setSortState] = useState<"value" | "change">("value")
+  const [sortState, setSortState] = useState<"price" | "changeRate">("price");
   const [more, setMore] = useState(1);
 
-  const {toggle, has} = useLikelist()
-  const highlightMatch = (text : string, query : string) => {
-    if(!query) return text
+  const { toggle, has } = useLikelist();
+  const highlightMatch = (text: string, query: string) => {
+    if (!query) return text;
     const lowerText = text.toLowerCase();
     const lowerQuery = query.toLowerCase();
     const start = lowerText.indexOf(lowerQuery);
-    if(start === -1) return text
+    if (start === -1) return text;
 
     //포함하고 있는 순간부터 끝까지
     const end = start + query.length;
     return (
       <>
-        {text.slice(0,start)}
-        <span className="text-yellow-300 font-bold">
-          {text.slice(start,end)}
-        </span>
+        {text.slice(0, start)}
+        <span className="text-yellow-300 font-bold">{text.slice(start, end)}</span>
         {text.slice(end)}
       </>
-    )
-
-  }
+    );
+  };
 
   const getStocks = async () => {
     const res = await fetch(`/api/stocks`);
-    const data = await res.json();
-    return data; 
+    if (!res.ok) throw new Error("Failed to fetch stocks");
+    const data: StockItem[] = await res.json();
+    return data;
   };
 
-  const {data : stockList, isLoading, error} = useQuery<StockItem[]>({
-    queryKey : ['stocks'],
-    queryFn : getStocks,
-    refetchInterval : 300000,
+  const {
+    data: stockList,
+    isLoading,
+    error,
+  } = useQuery<StockItem[]>({
+    queryKey: ["stocks"],
+    queryFn: getStocks,
+    refetchInterval: 300000,
   });
 
   //검색창에서 입력한 것들만 매핑
   const filteredList = (stockList ?? []).filter((stock) =>
-  stock.symbol.toLowerCase().includes(searchText.toLowerCase()))
+    stock.symbol.toLowerCase().includes(searchText.toLowerCase())
+  );
 
-  const visibleList = viewMode === "liked"
-    ? filteredList.filter((stock) => has(stock.symbol))
-    : filteredList;
-  
-  const sortList = isUp 
-  ? visibleList.sort((stock1,stock2) => { 
-    if(sortState === "value") return (stock1.data.c - stock2.data.c)
-    else if(sortState === "change") return (stock1.data.d - stock2.data.d)
-    else return 0
-    }
-    
-  )
-  : visibleList.sort((stock1,stock2) => {
-    if(sortState === "value") return (stock2.data.c - stock1.data.c)
-    else if(sortState === "change") return (stock2.data.d - stock1.data.d)
-    else return 0
-    }
-  )
-
-  
+  const visibleList =
+    viewMode === "liked" ? filteredList.filter((stock) => has(stock.symbol)) : filteredList;
+  const sortStockList = useMemo(
+    () => sortStocks(visibleList, sortState, isUp),
+    [visibleList, sortState, isUp]
+  );
+  const handleSortClick = () => {
+    setIsUp((prev) => !prev);
+  };
   if (error) {
     return (
       <div className="p-6 text-center text-red-400 bg-red-900/20 rounded-3xl">
@@ -118,16 +110,17 @@ export default function StockList(){
   }
 
   return (
-    <div
-      className="min-h-screen bg-[#1a2b3c] text-white p-4 font-sans"
-      
-    >
-      
+    <div className="min-h-screen bg-[#1a2b3c] text-white p-4 font-sans">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <button className="text-sm border border-gray-600 px-3 py-1 rounded-full">Menu</button>
         <h1 className="text-xl font-bold tracking-widest">STOCKS</h1>
-        <button className="text-sm border border-gray-600 px-3 py-1 rounded-full" onClick={() => setSearchOpenModal(true)}>Search</button>
+        <button
+          className="text-sm border border-gray-600 px-3 py-1 rounded-full"
+          onClick={() => setSearchOpenModal(true)}
+        >
+          Search
+        </button>
       </div>
       <div className="flex gap-2 mb-6">
         <button
@@ -156,30 +149,32 @@ export default function StockList(){
       <div className="flex items-center gap-2 mb-6">
         <span className="text-sm text-gray-300">정렬:</span>
         <div className="flex flex-1 gap-2">
-        <button
-          type="button"
-          className = {
-            sortState === "value" ? `flex-1 py-2 rounded-full text-xs font-bold border bg-[#4fd1c5] text-[#1a2b3c] border-[#4fd1c5]`
-            : `flex-1 py-2 rounded-full text-xs font-bold border border-gray-600 text-gray-300`
-          }
-          onClick={() => setSortState("value")}
-        >
+          <button
+            type="button"
+            className={
+              sortState === "price"
+                ? `flex-1 py-2 rounded-full text-xs font-bold border bg-[#4fd1c5] text-[#1a2b3c] border-[#4fd1c5]`
+                : `flex-1 py-2 rounded-full text-xs font-bold border border-gray-600 text-gray-300`
+            }
+            onClick={() => setSortState("price")}
+          >
             가격
           </button>
           <button
-          type="button"
-          className = {
-            sortState === "change" ? `flex-1 py-2 rounded-full text-xs font-bold border bg-[#4fd1c5] text-[#1a2b3c] border-[#4fd1c5]`
-            : `flex-1 py-2 rounded-full text-xs font-bold border border-gray-600 text-gray-300`
-          }
-          onClick={() => setSortState("change")}
-        >
+            type="button"
+            className={
+              sortState === "changeRate"
+                ? `flex-1 py-2 rounded-full text-xs font-bold border bg-[#4fd1c5] text-[#1a2b3c] border-[#4fd1c5]`
+                : `flex-1 py-2 rounded-full text-xs font-bold border border-gray-600 text-gray-300`
+            }
+            onClick={() => setSortState("changeRate")}
+          >
             등락률
           </button>
-        <button
-          type="button"
-          className="px-3 py-2 rounded-full text-xs font-bold border border-gray-600 text-gray-300"  
-          onClick={() => setIsUp(isUp ? false : true)}
+          <button
+            type="button"
+            className="px-3 py-2 rounded-full text-xs font-bold border border-gray-600 text-gray-300"
+            onClick={handleSortClick}
           >
             {isUp ? "↑" : "↓"}
           </button>
@@ -189,65 +184,83 @@ export default function StockList(){
       <div className="space-y-3">
         {isLoading ? (
           <>
-            {[...Array(5).fill(0).map((_, i) => 
-              <StockSkeleton key={i} />
-            )]
-            }
+            {[
+              ...Array(5)
+                .fill(0)
+                .map((_, i) => <StockSkeleton key={i} />),
+            ]}
           </>
         ) : visibleList.length === 0 ? (
-           <div className="rounded-xl border border-gray-700 bg-white/5 p-6 text-center text-gray-300">
-          관심목록이 없습니다.
+          <div className="rounded-xl border border-gray-700 bg-white/5 p-6 text-center text-gray-300">
+            관심목록이 없습니다.
           </div>
-        ) : 
-        ((sortList ?? []).slice(0,more * 7).map((stock) => (
-          <Link 
-            key={stock.id + ""}
-            href = {`/stockDetail/${stock.symbol}`} 
-            className="block no-underline"
-          >
-            <div 
-              className="flex items-center justify-between bg-white rounded-xl p-4 shadow-lg transition-all duration-200 ease-out active:scale-95 hover:scale-[1.02] hover:shadow-xl"
+        ) : (
+          (sortStockList ?? []).slice(0, more * 7).map((stock) => (
+            <Link
+              key={stock.id + ""}
+              href={`/stockDetail/${stock.symbol}`}
+              className="block no-underline"
             >
-              {/* Symbol */}
-              <div className="flex items-center gap-4 ">
-                {has(stock.symbol) ? 
-                <Heart className="text-red-500 fill-red-500"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  toggle(stock.symbol)
-                  
-                }}/> : 
-                <Heart className="text-red-500 fill-white"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  toast.success('관심목록 등록')
-                  toggle(stock.symbol)
-                }}
-                />}
-                <div>
-                  <h3 className="text-gray-900 font-bold text-lg">
-                    {highlightMatch(stock.symbol,searchText)}
-                  </h3>
-                  {/* <p className="text-gray-400 text-xs">{stock.symbol}</p> */}
+              <div className="flex items-center justify-between bg-white rounded-xl p-4 shadow-lg transition-all duration-200 ease-out active:scale-95 hover:scale-[1.02] hover:shadow-xl">
+                {/* Symbol */}
+                <div className="flex items-center gap-4 ">
+                  {has(stock.symbol) ? (
+                    <Heart
+                      className="text-red-500 fill-red-500"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggle(stock.symbol);
+                      }}
+                    />
+                  ) : (
+                    <Heart
+                      className="text-red-500 fill-white"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toast.success("관심목록 등록");
+                        toggle(stock.symbol);
+                      }}
+                    />
+                  )}
+                  <div>
+                    <h3 className="text-gray-900 font-bold text-lg">
+                      {highlightMatch(stock.symbol, searchText)}
+                    </h3>
+                    {/* <p className="text-gray-400 text-xs">{stock.symbol}</p> */}
+                  </div>
+                </div>
+                {/* Price */}
+                <div className="text-right">
+                  <p className="text-gray-900 font-bold">${stock.data.c}</p>
+                  <div
+                    className={`flex items-center justify-end text-sm font-semibold ${stock.data.d > 0 ? "text-green-500" : "text-red-500"}`}
+                  >
+                    <span>{stock.data.d > 0 ? "+" : "-"}</span>
+                    <span className="ml-1">{Math.abs(stock.data.d)} $</span>
+                  </div>
                 </div>
               </div>
-              {/* Price */}
-              <div className="text-right">
-                <p className="text-gray-900 font-bold">${stock.data.c}</p>
-                <div className={`flex items-center justify-end text-sm font-semibold ${stock.data.d > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                  <span>{stock.data.d > 0 ? '+' : '-'}</span>
-                  <span className="ml-1">{Math.abs(stock.data.d)} %</span>
-                </div>
-              </div>
-            </div>
-            
-          </Link>
-        )))}
-        {isLoading ? (<></>) : (
-          <div className="flex items-center justify-center animate-bounce" onClick={() => {setMore((prev) => prev + 1)}}>
-            {sortList.length % (more * 7) < 7 && sortList.length != 0 ? <ArrowBigDown /> : <></>}
+            </Link>
+          ))
+        )}
+        {isLoading ? (
+          <></>
+        ) : (
+          <div
+            className="flex items-center justify-center animate-bounce"
+            onClick={() => {
+              setMore((prev) => prev + 1);
+            }}
+          >
+            {sortStockList.length % (more * 7) < 7 &&
+            sortStockList.length != 0 &&
+            viewMode == "all" ? (
+              <ArrowBigDown />
+            ) : (
+              <></>
+            )}
           </div>
         )}
       </div>
@@ -278,5 +291,4 @@ export default function StockList(){
     </div>
   );
 }
-  // Pull-to-refresh handlers: only active when the window is at the top.
-  
+// Pull-to-refresh handlers: only active when the window is at the top.
