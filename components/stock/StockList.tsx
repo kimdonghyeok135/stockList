@@ -30,6 +30,9 @@ export const StockList = ({
   highlightMatch,
   onMore,
 }: StockListProps) => {
+  const pageSize = 7;
+  const visibleCount = more * pageSize;
+  const hasMore = sortStockList.length > visibleCount;
   return (
     <div className="space-y-3">
       {isLoading ? (
@@ -60,11 +63,7 @@ export const StockList = ({
       )}
       {!isLoading && (
         <div className="flex items-center justify-center animate-bounce" onClick={onMore}>
-          {sortStockList.length % (more * 7) < 7 &&
-          sortStockList.length !== 0 &&
-          viewMode === "all" ? (
-            <ArrowBigDown />
-          ) : null}
+          {hasMore && viewMode === "all" ? <ArrowBigDown /> : null}
         </div>
       )}
     </div>
