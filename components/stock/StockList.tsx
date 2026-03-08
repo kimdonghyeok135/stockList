@@ -14,7 +14,6 @@ type StockListProps = {
   viewMode: StockViewMode;
   has: (symbol: string) => boolean;
   toggle: (symbol: string) => void;
-  highlightMatch: (text: string, query: string) => React.ReactNode;
   onMore: () => void;
 };
 
@@ -27,7 +26,6 @@ export const StockList = ({
   viewMode,
   has,
   toggle,
-  highlightMatch,
   onMore,
 }: StockListProps) => {
   const pageSize = 7;
@@ -57,7 +55,6 @@ export const StockList = ({
               searchText={searchText}
               has={has}
               toggle={toggle}
-              highlightMatch={() => highlightMatch(stock.symbol, searchText)}
             />
           ))
       )}

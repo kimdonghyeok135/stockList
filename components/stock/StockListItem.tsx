@@ -8,16 +8,28 @@ type StockListItemProps = {
   searchText: string;
   has: (symbol: string) => boolean;
   toggle: (symbol: string) => void;
-  highlightMatch: (text: string, query: string) => React.ReactNode;
 };
 
-export const StockListItem = ({
-  stockItem,
-  searchText,
-  has,
-  toggle,
-  highlightMatch,
-}: StockListItemProps) => {
+export const StockListItem = ({ stockItem, searchText, has, toggle }: StockListItemProps) => {
+  const highlightMatch = (text: string, query: string) => {
+    if (!query) return text;
+
+    const lowerText = text.toLowerCase();
+    const lowerQuery = query.toLowerCase();
+    const start = lowerText.indexOf(lowerQuery);
+
+    if (start === -1) return text;
+
+    const end = start + query.length;
+
+    return (
+      <>
+        {text.slice(0, start)}
+        <span className="text-yellow-300 font-bold">{text.slice(start, end)}</span>
+        {text.slice(end)}
+      </>
+    );
+  };
   return (
     <>
       <Link
