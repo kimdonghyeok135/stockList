@@ -23,3 +23,7 @@ All notable changes to this project will be documented in this file.
 
 - 가격 알림 기능추가
 - API KEY 숨김 처리
+
+## [2.0.0]
+
+- app/page.tsx 내의 useState를 커스텀 훅으로 재정의
