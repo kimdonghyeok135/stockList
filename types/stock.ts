@@ -17,3 +17,19 @@ export interface StockItem {
 
 export type StockViewMode = "all" | "liked";
 export type StockSortKey = "price" | "changeRate";
+
+export interface stockDetail {
+  country: string;
+  currency: string;
+  estimateCurrency: string;
+  exchange: string;
+  finnhubIndustry: string;
+  ipo: string; // YYYY-MM-DD
+  logo: string; // image URL
+  marketCapitalization: number;
+  name: string;
+  phone: string;
+  shareOutstanding: number;
+  ticker: string;
+  weburl: string;
+}

@@ -35,12 +35,6 @@
 - 전역 Provider 분리
 - 리스트 / 검색 / 스켈레톤 UI 분리
 
-## 아쉬운 점
-
-- 테스트 코드 미작성
-- 리스트 아이템 단위 분리 부족
-- empty state 문구 고도화 필요
-
 # stockList
 
 A mobile web project that displays a list of stocks with search, sorting, and favorite (watchlist) features.

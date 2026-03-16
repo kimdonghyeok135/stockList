@@ -1,4 +1,4 @@
-import { getStockNews } from "@/app/lib/stock";
+import { getStockNews } from "@/app/lib/api/yahoo";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: Promise<{ symbol: string }> }) {

@@ -1,4 +1,4 @@
-import { getStockDataCandle } from "@/app/lib/stock";
+import { getStockDataCandle } from "@/app/lib/api/yahoo";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {

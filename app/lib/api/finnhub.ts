@@ -4,6 +4,7 @@ export async function getStockInfo(symbol: string) {
   const response = await fetch(
     `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${STOCK_API_KEY}`
   );
+  if (!response) throw new Error("getStockInfo Fail");
   const data = await response.json();
   return data;
 }
@@ -15,6 +16,7 @@ export async function getStocksLists() {
     const response = await fetch(
       `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${STOCK_API_KEY}`
     );
+    if (!response) throw new Error("getStocksLists Fail");
     const data = await response.json();
     return {
       id: index,
@@ -32,23 +34,5 @@ export async function getStockDetailInfo(symbol: string) {
     `https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${STOCK_API_KEY}`
   );
   const data = await response.json();
-  return data;
-}
-
-export async function getStockDataCandle(symbol: string, range: string, interval: string) {
-  const response = await fetch(
-    `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?range=${range}&interval=${interval}`
-  );
-  const data = await response.json();
-  return data;
-}
-
-export async function getStockNews(symbol: string, newsCnt: number) {
-  console.log("symbol", symbol);
-  console.log("newsCnt", newsCnt);
-  const res = await fetch(
-    `https://query1.finance.yahoo.com/v1/finance/search?q=${symbol}&newsCount=${newsCnt}`
-  );
-  const data = await res.json();
   return data;
 }

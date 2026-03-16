@@ -1,5 +1,5 @@
+import { getStocksLists } from "@/app/lib/api/finnhub";
 import { NextResponse } from "next/server";
-import { getStocksLists } from "@/app/lib/stock";
 
 export async function GET() {
   const data = await getStocksLists();

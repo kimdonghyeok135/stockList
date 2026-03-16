@@ -43,7 +43,9 @@ export const StockList = ({
         </>
       ) : visibleListLength === 0 ? (
         <div className="rounded-xl border border-gray-700 bg-white/5 p-6 text-center text-gray-300">
-          {viewMode === "liked" ? "관심목록이 없습니다." : "검색 결과가 없습니다."}
+          {viewMode === "liked"
+            ? "관심 종목이 아직 없습니다. 하트를 눌러 추가해보세요."
+            : "검색 결과가 없습니다. 다른 종목 코드를 입력해보세요."}
         </div>
       ) : (
         sortStockList
