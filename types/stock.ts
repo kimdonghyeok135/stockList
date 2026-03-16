@@ -1,24 +1,24 @@
-export interface StockData {
-  c: number;
-  d: number;
-  dp: number;
-  h: number;
-  l: number;
-  o: number;
-  pc: number;
-  t: number;
+export interface StockQuote {
+  currentPrice: number;
+  priceChange: number;
+  percentChange: number;
+  highPrice: number;
+  lowPrice: number;
+  openPrice: number;
+  previousClose: number;
+  timestamp: number;
 }
 
 export interface StockItem {
   id: number;
   symbol: string;
-  data: StockData;
+  data: StockQuote;
 }
 
 export type StockViewMode = "all" | "liked";
 export type StockSortKey = "price" | "changeRate";
 
-export interface stockDetail {
+export interface StockProfile {
   country: string;
   currency: string;
   estimateCurrency: string;

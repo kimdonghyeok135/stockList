@@ -66,12 +66,12 @@ export const StockListItem = ({ stockItem, searchText, has, toggle }: StockListI
             </div>
           </div>
           <div className="text-right">
-            <p className="text-gray-900 font-bold">${stockItem.data.c}</p>
+            <p className="text-gray-900 font-bold">${stockItem.data.currentPrice}</p>
             <div
-              className={`flex items-center justify-end text-sm font-semibold ${stockItem.data.d > 0 ? "text-green-500" : "text-red-500"}`}
+              className={`flex items-center justify-end text-sm font-semibold ${stockItem.data.priceChange > 0 ? "text-green-500" : "text-red-500"}`}
             >
-              <span>{stockItem.data.d > 0 ? "+" : "-"}</span>
-              <span className="ml-1">{Math.abs(stockItem.data.d)} $</span>
+              <span>{stockItem.data.priceChange > 0 ? "+" : "-"}</span>
+              <span className="ml-1">{Math.abs(stockItem.data.priceChange)} $</span>
             </div>
           </div>
         </div>
