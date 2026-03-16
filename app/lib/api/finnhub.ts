@@ -18,10 +18,21 @@ export async function getStocksLists() {
     );
     if (!response) throw new Error("getStocksLists Fail");
     const data = await response.json();
+    const refineData = {
+      currentPrice: data.c,
+      priceChange: data.d,
+      percentChange: data.dp,
+      highPrice: data.h,
+      lowPrice: data.l,
+      openPrice: data.o,
+      previousClose: data.pc,
+      timestamp: data.t,
+    };
+    console.log("refineData", refineData);
     return {
       id: index,
       symbol,
-      data,
+      data: refineData,
     };
   });
   await new Promise((res) => setTimeout(res, 3000));
