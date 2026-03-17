@@ -4,9 +4,20 @@ export async function getStockInfo(symbol: string) {
   const response = await fetch(
     `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${STOCK_API_KEY}`
   );
-  if (!response) throw new Error("getStockInfo Fail");
+  if (!response.ok) throw new Error("getStockInfo Fail");
   const data = await response.json();
-  return data;
+  const refindData = {
+    currentPrice: data.c,
+    priceChange: data.d,
+    percentChange: data.dp,
+    highPrice: data.h,
+    lowPrice: data.l,
+    openPrice: data.o,
+    previousClose: data.pc,
+    timestamp: data.t,
+  };
+
+  return refindData;
 }
 
 export async function getStocksLists() {
@@ -16,7 +27,7 @@ export async function getStocksLists() {
     const response = await fetch(
       `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${STOCK_API_KEY}`
     );
-    if (!response) throw new Error("getStocksLists Fail");
+    if (!response.ok) throw new Error("getStocksLists Fail");
     const data = await response.json();
     const refineData = {
       currentPrice: data.c,
@@ -28,7 +39,6 @@ export async function getStocksLists() {
       previousClose: data.pc,
       timestamp: data.t,
     };
-    console.log("refineData", refineData);
     return {
       id: index,
       symbol,
