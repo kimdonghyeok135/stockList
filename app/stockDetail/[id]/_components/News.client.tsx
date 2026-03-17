@@ -3,33 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight, CloudAlert } from "lucide-react";
 
-type NewsTopProps = {
-  count: [];
-  news: NewsProps[];
-};
-
-type NewsProps = {
-  uuid: string;
-  title: string;
-  publisher: string;
-  link: string;
-  providerPublishTime: number; // Unix timestamp (seconds)
-  type: "STORY" | string;
-  thumbnail: Thumbnail;
-  relatedTickers: string[];
-};
-
-type Thumbnail = {
-  resolutions: Resolution[];
-};
-
-type Resolution = {
-  url: string;
-  width: number;
-  height: number;
-  tag: string;
-};
-
 export default function News({ symbol }: { symbol: string }) {
   const getNewsData = async () => {
     const res = await fetch(`/api/stocks/${symbol}/news?newsCnt=5`);

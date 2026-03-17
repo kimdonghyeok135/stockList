@@ -1,4 +1,5 @@
 import { StockSortKey } from "@/types/stock";
+import { MoveDown, MoveUp } from "lucide-react";
 
 type StockSortProps = {
   setSortState: React.Dispatch<React.SetStateAction<StockSortKey>>;
@@ -39,7 +40,7 @@ export const StockSort = ({ setSortState, setIsUp, sortState, isUp }: StockSortP
           className="px-3 py-2 rounded-full text-xs font-bold border border-gray-600 text-gray-300"
           onClick={() => setIsUp((prev) => !prev)}
         >
-          {isUp ? "ASC" : "DESC"}
+          {isUp ? <MoveUp color="#f7f7f7" /> : <MoveDown color="#f7f7f7" />}
         </button>
       </div>
     </div>
