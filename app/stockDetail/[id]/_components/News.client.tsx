@@ -1,5 +1,6 @@
 "use client";
 
+import { NewsTopProps } from "@/types/news";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight, CloudAlert } from "lucide-react";
 

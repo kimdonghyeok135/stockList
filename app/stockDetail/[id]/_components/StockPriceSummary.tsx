@@ -1,3 +1,4 @@
+import { formatCurrency, formatNumber } from "@/lib/format";
 import { StockQuote } from "@/types/stock";
 
 export default function StockPriceSummary({ stockDetailPrice }: { stockDetailPrice: StockQuote }) {
@@ -11,7 +12,7 @@ export default function StockPriceSummary({ stockDetailPrice }: { stockDetailPri
         </p>
         <div className="mt-1 flex items-end gap-2">
           <p className="text-4xl font-extrabold tracking-tight text-gray-900">
-            ${stockDetailPrice.currentPrice}
+            {formatCurrency(stockDetailPrice.currentPrice, "USD")}
           </p>
           <span className="text-sm text-gray-500 pb-1">USD</span>
         </div>
@@ -24,10 +25,10 @@ export default function StockPriceSummary({ stockDetailPrice }: { stockDetailPri
         }`}
       >
         <p className={`text-sm font-extrabold ${isUp ? "text-emerald-600" : "text-rose-600"}`}>
-          {isUp ? "▲" : "▼"} {stockDetailPrice.percentChange.toFixed(2)}%
+          {isUp ? "▲" : "▼"} {formatNumber(stockDetailPrice.percentChange)}%
         </p>
         <p className={`text-xs font-semibold ${isUp ? "text-emerald-500" : "text-rose-500"}`}>
-          ({stockDetailPrice.priceChange.toFixed(2)})
+          ({formatNumber(stockDetailPrice.priceChange)})
         </p>
       </div>
     </div>

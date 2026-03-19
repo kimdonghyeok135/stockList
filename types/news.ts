@@ -1,9 +1,9 @@
-type NewsTopProps = {
+export interface NewsTopProps {
   count: [];
   news: NewsProps[];
-};
+}
 
-type NewsProps = {
+export interface NewsProps {
   uuid: string;
   title: string;
   publisher: string;
@@ -12,15 +12,15 @@ type NewsProps = {
   type: "STORY" | string;
   thumbnail: Thumbnail;
   relatedTickers: string[];
-};
+}
 
-type Thumbnail = {
+export interface Thumbnail {
   resolutions: Resolution[];
-};
+}
 
-type Resolution = {
+export interface Resolution {
   url: string;
   width: number;
   height: number;
   tag: string;
-};
+}
