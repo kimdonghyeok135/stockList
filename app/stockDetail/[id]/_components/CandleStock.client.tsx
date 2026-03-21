@@ -46,7 +46,8 @@ export default function CandleStock({ symbol }: Props) {
 
   const getCandleData = async (): Promise<YahooChartResponse> => {
     const interval = INTERVAL_BY_RANGE[range];
-    const res = await fetch(`/api/stocks/${symbol}/candles?symbol=${symbol}&range=${range}&interval=${interval}`
+    const res = await fetch(
+      `/api/stocks/${symbol}/candles?symbol=${symbol}&range=${range}&interval=${interval}`
     );
 
     if (!res.ok) {

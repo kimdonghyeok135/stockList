@@ -7,9 +7,6 @@ export async function getStockDataCandle(symbol: string, range: string, interval
 }
 
 export async function getStockNews(symbol: string, newsCnt: number) {
-  console.log("symbol", symbol);
-  console.log("newsCnt", newsCnt);
-
   const res = await fetch(
     `https://query1.finance.yahoo.com/v1/finance/search?q=${symbol}&newsCount=${newsCnt}`
   );

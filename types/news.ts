@@ -1,5 +1,5 @@
 export interface NewsTopProps {
-  count: [];
+  count: number[];
   news: NewsProps[];
 }
 
