@@ -30,8 +30,8 @@ export default function HomePage() {
     setSearchText,
     viewMode,
     setViewMode,
-    isUp,
-    setIsUp,
+    isAscending,
+    setisAscending,
     sortState,
     setSortState,
     more,
@@ -61,7 +61,12 @@ export default function HomePage() {
         </button>
       </div>
       <StockAllorLiked setViewMode={setViewMode} viewMode={viewMode} />
-      <StockSort setSortState={setSortState} setIsUp={setIsUp} sortState={sortState} isUp={isUp} />
+      <StockSort
+        setSortState={setSortState}
+        setisAscending={setisAscending}
+        sortState={sortState}
+        isAscending={isAscending}
+      />
       <StockList
         isLoading={isLoading}
         visibleListLength={visibleList.length}

@@ -3,12 +3,17 @@ import { MoveDown, MoveUp } from "lucide-react";
 
 type StockSortProps = {
   setSortState: React.Dispatch<React.SetStateAction<StockSortKey>>;
-  setIsUp: React.Dispatch<React.SetStateAction<boolean>>;
+  setisAscending: React.Dispatch<React.SetStateAction<boolean>>;
   sortState: string;
-  isUp: boolean;
+  isAscending: boolean;
 };
 
-export const StockSort = ({ setSortState, setIsUp, sortState, isUp }: StockSortProps) => {
+export const StockSort = ({
+  setSortState,
+  setisAscending,
+  sortState,
+  isAscending,
+}: StockSortProps) => {
   return (
     <div className="flex items-center gap-2 mb-6">
       <span className="text-sm text-gray-300">Sort:</span>
@@ -22,7 +27,7 @@ export const StockSort = ({ setSortState, setIsUp, sortState, isUp }: StockSortP
           }
           onClick={() => setSortState("price")}
         >
-          Price
+          가격
         </button>
         <button
           type="button"
@@ -33,14 +38,14 @@ export const StockSort = ({ setSortState, setIsUp, sortState, isUp }: StockSortP
           }
           onClick={() => setSortState("changeRate")}
         >
-          Change
+          변동률
         </button>
         <button
           type="button"
           className="px-3 py-2 rounded-full text-xs font-bold border border-gray-600 text-gray-300"
-          onClick={() => setIsUp((prev) => !prev)}
+          onClick={() => setisAscending((prev) => !prev)}
         >
-          {isUp ? <MoveUp color="#f7f7f7" /> : <MoveDown color="#f7f7f7" />}
+          {isAscending ? <MoveUp color="#f7f7f7" /> : <MoveDown color="#f7f7f7" />}
         </button>
       </div>
     </div>

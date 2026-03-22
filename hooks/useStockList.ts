@@ -10,7 +10,7 @@ type UseStockListParams = {
 export const useStockList = ({ stockList, has }: UseStockListParams) => {
   const [searchText, setSearchText] = useState("");
   const [viewMode, setViewMode] = useState<StockViewMode>("all");
-  const [isUp, setIsUp] = useState(false);
+  const [isAscending, setisAscending] = useState(false);
   const [sortState, setSortState] = useState<StockSortKey>("price");
   const [more, setMore] = useState(1);
 
@@ -28,8 +28,8 @@ export const useStockList = ({ stockList, has }: UseStockListParams) => {
   );
 
   const sortStockList = useMemo(
-    () => sortStocks(visibleList, sortState, isUp),
-    [visibleList, sortState, isUp]
+    () => sortStocks(visibleList, sortState, isAscending),
+    [visibleList, sortState, isAscending]
   );
 
   return {
@@ -37,8 +37,8 @@ export const useStockList = ({ stockList, has }: UseStockListParams) => {
     setSearchText,
     viewMode,
     setViewMode,
-    isUp,
-    setIsUp,
+    isAscending,
+    setisAscending,
     sortState,
     setSortState,
     more,

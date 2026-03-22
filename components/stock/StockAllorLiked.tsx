@@ -2,7 +2,7 @@ import { StockViewMode } from "@/types/stock";
 
 type StockAllorLikedProps = {
   setViewMode: React.Dispatch<React.SetStateAction<StockViewMode>>;
-  viewMode: string;
+  viewMode: "all" | "liked";
 };
 
 export const StockAllorLiked = ({ setViewMode, viewMode }: StockAllorLikedProps) => {
@@ -17,7 +17,7 @@ export const StockAllorLiked = ({ setViewMode, viewMode }: StockAllorLikedProps)
             : "border-gray-600 text-gray-300"
         }`}
       >
-        All
+        전체상품
       </button>
       <button
         type="button"
@@ -28,7 +28,7 @@ export const StockAllorLiked = ({ setViewMode, viewMode }: StockAllorLikedProps)
             : "border-gray-600 text-gray-300"
         }`}
       >
-        Liked
+        관심목록
       </button>
     </div>
   );
