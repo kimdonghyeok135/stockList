@@ -6,6 +6,7 @@ export async function getStockInfo(symbol: string) {
   );
   if (!response.ok) throw new Error("getStockInfo Fail");
   const data = await response.json();
+  console.log(data);
   return data;
 }
 

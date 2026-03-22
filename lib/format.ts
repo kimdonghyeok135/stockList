@@ -14,5 +14,14 @@ export function formatNumber(value: number) {
 export function formatTimestamp(timestamp: number) {
   if (!timestamp) return "-";
   const date = new Date(timestamp * 1000);
-  return date.toLocaleString();
+  const formattedTime = new Intl.DateTimeFormat("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+  }).format(date);
+  return formattedTime;
 }
