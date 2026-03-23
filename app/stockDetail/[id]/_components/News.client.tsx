@@ -22,7 +22,7 @@ export default function News({ symbol }: { symbol: string }) {
     queryFn: getNewsData,
     refetchInterval: 1e6,
   });
-
+  console.log("newsQueryData", newsQueryData);
   return (
     <div className="mt-4 rounded-3xl bg-white p-4 shadow-lg">
       <div className="flex items-center justify-between">
