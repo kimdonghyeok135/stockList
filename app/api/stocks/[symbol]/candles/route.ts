@@ -1,9 +1,9 @@
 import { getStockDataCandle } from "@/app/lib/api/yahoo";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ symbol: string }> }) {
+  const { symbol } = await params;
   const { searchParams } = new URL(req.url);
-  const symbol = searchParams.get("symbol");
   const range = searchParams.get("range");
   const interval = searchParams.get("interval");
   const data = await getStockDataCandle(symbol!, range!, interval!);

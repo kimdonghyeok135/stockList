@@ -66,7 +66,6 @@ export default function CandleStock({ symbol }: Props) {
     queryFn: getCandleData,
     refetchInterval: 300000,
   });
-
   const candles = useMemo<CandlestickData[]>(() => {
     const result = candleResponse?.chart?.result?.[0];
     const timestamps = result?.timestamp ?? [];
