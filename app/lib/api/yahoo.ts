@@ -1,5 +1,3 @@
-import { th } from "framer-motion/client";
-
 export async function getStockDataCandle(symbol: string, range: string, interval: string) {
   try {
     const response = await fetch(

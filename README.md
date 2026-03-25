@@ -1,60 +1,52 @@
-# stockList
+# Stock List
 
-주식 리스트 조회, 검색, 정렬, 관심종목 저장 기능을 구현한 모바일 웹 프로젝트입니다.
+미국 주식 목록을 조회하고, 검색/정렬/관심종목 저장 및 상세 정보를 확인할 수 있는 모바일 중심 토이 프로젝트입니다.
 
-## 데모링크
+배포 링크: https://stock-list-p82m.vercel.app
 
-- https://stock-list-p82m.vercel.app
+## 프로젝트 소개
+
+이 프로젝트는 Next.js App Router 기반으로 만든 주식 조회 서비스입니다.  
+단순히 데이터를 보여주는 데서 끝나지 않고, 목록 조회부터 상세 조회, 차트, 뉴스, 관심종목 저장까지 하나의 흐름으로 연결해보는 데 초점을 맞췄습니다.
+
+특히 다음 부분을 연습하는 것을 목표로 했습니다.
+
+- App Router 기반 라우팅과 API Route 구성
+- 외부 API 연동과 응답 데이터 가공
+- React Query를 활용한 클라이언트 데이터 패칭
+- Zustand persist를 활용한 관심종목 상태 관리
+- 테스트 가능한 구조로 로직 분리
 
 ## 주요 기능
 
-- 종목 리스트 조회
-- 검색
+- 주식 목록 조회
+- 종목 검색
 - 가격 / 등락률 정렬
-- 관심종목 저장(persist)
-- 종목 상세 페이지 이동
+- 관심종목 저장 및 유지
+- 종목 상세 페이지 조회
+- 캔들 차트 조회
+- 종목 관련 뉴스 조회
 
 ## 기술 스택
 
-- Next.js App Router
+- Next.js 16
+- React 19
 - TypeScript
 - React Query v5
-- Zustand persist
+- Zustand
 - Tailwind CSS
+- Vitest
+- Testing Library
 
 ## 폴더 구조
 
-- app: 라우트, providers, api
-- components: UI 컴포넌트
-- lib: fetch / 정렬 유틸
-- types: 공통 타입
+app/
+api/ # API Route
+lib/api/ # 외부 API 호출 함수
+stockDetail/[id]/ # 종목 상세 페이지
+store/ # Zustand store
 
-## 고민한 점
-
-- 정렬 시 원본 배열이 변경되지 않도록 복사 후 sort 처리
-- 전역 Provider 분리
-- 리스트 / 검색 / 스켈레톤 UI 분리
-
-# stockList
-
-A mobile web project that displays a list of stocks with search, sorting, and favorite (watchlist) features.
-
-## Demo
-
-- https://stock-list-p82m.vercel.app
-
-## Features
-
-- View stock list
-- Search stocks
-- Sort by price or change rate
-- Save favorite stocks (persisted)
-- Navigate to stock detail page
-
-## Tech Stack
-
-- Next.js (App Router)
-- TypeScript
-- React Query v5
-- Zustand (persist)
-- Tailwind CSS
+components/ # 공용 UI 컴포넌트
+hooks/ # 커스텀 훅
+lib/ # 유틸 함수, 정렬 로직 등
+types/ # 공용 타입
