@@ -16,6 +16,8 @@
 - React Query를 활용한 클라이언트 데이터 패칭
 - Zustand persist를 활용한 관심종목 상태 관리
 - 테스트 가능한 구조로 로직 분리
+- CSR과 SSR을 어떠한 이유로 스스로 판단을 하고 설계
+- 테스트를 충분히 함으로써 안정적인 운용
 
 ## 주요 기능
 
@@ -37,16 +39,3 @@
 - Tailwind CSS
 - Vitest
 - Testing Library
-
-## 폴더 구조
-
-app/
-api/ # API Route
-lib/api/ # 외부 API 호출 함수
-stockDetail/[id]/ # 종목 상세 페이지
-store/ # Zustand store
-
-components/ # 공용 UI 컴포넌트
-hooks/ # 커스텀 훅
-lib/ # 유틸 함수, 정렬 로직 등
-types/ # 공용 타입
