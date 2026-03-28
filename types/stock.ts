@@ -9,10 +9,27 @@ export interface StockQuote {
   timestamp: number;
 }
 
+export interface StockOriginDataProp {
+  c: number; // current price
+  d: number; // price change
+  dp: number; // percent change
+  h: number; // high price of the day
+  l: number; // low price of the day
+  o: number; // open price of the day
+  pc: number; // previous close price
+  t: number; // timestamp
+}
+
 export interface StockItem {
   id: number;
   symbol: string;
   data: StockQuote;
+}
+
+export interface StockOriginDataItem {
+  id: number;
+  symbol: string;
+  data: StockOriginDataProp;
 }
 
 export type StockViewMode = "all" | "liked";

@@ -1,3 +1,5 @@
+import { StockOriginDataItem } from "@/types/stock";
+
 const STOCK_API_KEY = process.env.FINNHUB_API_KEY;
 
 export async function getStockInfo(symbol: string) {
@@ -74,7 +76,24 @@ export async function getStocksLists() {
     }
   });
 
-  return Promise.all(callApi);
+  // 트러블 슈팅
+  // 모든 요청이 실패한 경우를 명확히 처리하기 위해 Promise.allSettled 사용 각 요청의 성공과 실패를 개별적으로 처리 > 실패한 요청이 전체 결과에 미치는 영향을 최소화
+  //실패에 대한 경우 어떤 영향을 줄 수 있고 그 해결법에 대한 더 고민.
+  const results = await Promise.allSettled(callApi);
+  const successList = results
+    .filter(
+      (result): result is PromiseFulfilledResult<StockOriginDataItem> =>
+        result.status === "fulfilled"
+    )
+    .map((result) => result.value);
+
+  const failedList = results.filter((result) => result.status === "rejected");
+  console.log("successList", successList);
+  console.log("failedList", failedList);
+  if (failedList.length === symbols.length) {
+    throw new Error("All stock requests failed");
+  }
+  return successList;
 }
 
 export async function getStockDetailInfo(symbol: string) {

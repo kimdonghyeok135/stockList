@@ -13,7 +13,7 @@ export const useStockList = ({ stockList, has }: UseStockListParams) => {
   const [isAscending, setisAscending] = useState(false);
   const [sortState, setSortState] = useState<StockSortKey>("price");
   const [more, setMore] = useState(1);
-
+  console.log("stockList", stockList);
   const filteredList = useMemo(
     () =>
       (stockList ?? []).filter((stock) =>
