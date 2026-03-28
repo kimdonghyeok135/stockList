@@ -1,11 +1,11 @@
 import { StockViewMode } from "@/types/stock";
 
-type StockAllorLikedProps = {
+type StockViewModeTabsProps = {
   setViewMode: React.Dispatch<React.SetStateAction<StockViewMode>>;
   viewMode: "all" | "liked";
 };
 
-export const StockAllorLiked = ({ setViewMode, viewMode }: StockAllorLikedProps) => {
+export const StockViewModeTabs = ({ setViewMode, viewMode }: StockViewModeTabsProps) => {
   return (
     <div className="flex gap-2 mb-6">
       <button

@@ -3,14 +3,14 @@ import { MoveDown, MoveUp } from "lucide-react";
 
 type StockSortProps = {
   setSortState: React.Dispatch<React.SetStateAction<StockSortKey>>;
-  setisAscending: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAscending: React.Dispatch<React.SetStateAction<boolean>>;
   sortState: string;
   isAscending: boolean;
 };
 
 export const StockSort = ({
   setSortState,
-  setisAscending,
+  setIsAscending,
   sortState,
   isAscending,
 }: StockSortProps) => {
@@ -43,7 +43,7 @@ export const StockSort = ({
         <button
           type="button"
           className="px-3 py-2 rounded-full text-xs font-bold border border-gray-600 text-gray-300"
-          onClick={() => setisAscending((prev) => !prev)}
+          onClick={() => setIsAscending((prev) => !prev)}
         >
           {isAscending ? <MoveUp color="#f7f7f7" /> : <MoveDown color="#f7f7f7" />}
         </button>

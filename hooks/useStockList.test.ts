@@ -116,7 +116,7 @@ describe("useStockList", () => {
     );
     act(() => {
       result.current.setSortState("changeRate");
-      result.current.setisAscending(true);
+      result.current.setIsAscending(true);
     });
     expect(result.current.sortStockList.map((stock) => stock.symbol)).toEqual([
       "BBB",

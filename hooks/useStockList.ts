@@ -10,10 +10,9 @@ type UseStockListParams = {
 export const useStockList = ({ stockList, has }: UseStockListParams) => {
   const [searchText, setSearchText] = useState("");
   const [viewMode, setViewMode] = useState<StockViewMode>("all");
-  const [isAscending, setisAscending] = useState(false);
+  const [isAscending, setIsAscending] = useState(false);
   const [sortState, setSortState] = useState<StockSortKey>("price");
   const [more, setMore] = useState(1);
-  console.log("stockList", stockList);
   const filteredList = useMemo(
     () =>
       (stockList ?? []).filter((stock) =>
@@ -38,7 +37,7 @@ export const useStockList = ({ stockList, has }: UseStockListParams) => {
     viewMode,
     setViewMode,
     isAscending,
-    setisAscending,
+    setIsAscending,
     sortState,
     setSortState,
     more,

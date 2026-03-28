@@ -1,4 +1,4 @@
-import { StockOriginDataItem } from "@/types/stock";
+import { FinnhubQuoteItem } from "@/types/stock";
 
 const STOCK_API_KEY = process.env.FINNHUB_API_KEY;
 
@@ -33,7 +33,7 @@ export async function getStockInfo(symbol: string) {
   }
 }
 
-export async function getStocksLists() {
+export async function getStockList() {
   const symbols = ["AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "META", "TSLA", "AMD", "AVGO", "MU"];
 
   const callApi = symbols.map(async (symbol, index) => {
@@ -45,14 +45,14 @@ export async function getStocksLists() {
       if (!response.ok) {
         const errorText = await response.text();
 
-        console.error("getStocksLists request failed", {
+        console.error("getStockList request failed", {
           symbol,
           status: response.status,
           statusText: response.statusText,
           body: errorText,
         });
 
-        throw new Error(`getStocksLists Fail: ${response.status} ${response.statusText}`);
+        throw new Error(`getStockList Fail: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
@@ -63,11 +63,11 @@ export async function getStocksLists() {
         data,
       };
     } catch (error) {
-      if (error instanceof Error && error.message.startsWith("getStocksLists Fail:")) {
+      if (error instanceof Error && error.message.startsWith("getStockList Fail:")) {
         throw error;
       }
 
-      console.error("getStocksLists unexpected error", {
+      console.error("getStockList unexpected error", {
         symbol,
         error,
       });
@@ -82,14 +82,12 @@ export async function getStocksLists() {
   const results = await Promise.allSettled(callApi);
   const successList = results
     .filter(
-      (result): result is PromiseFulfilledResult<StockOriginDataItem> =>
-        result.status === "fulfilled"
+      (result): result is PromiseFulfilledResult<FinnhubQuoteItem> => result.status === "fulfilled"
     )
     .map((result) => result.value);
 
   const failedList = results.filter((result) => result.status === "rejected");
-  console.log("successList", successList);
-  console.log("failedList", failedList);
+
   if (failedList.length === symbols.length) {
     throw new Error("All stock requests failed");
   }

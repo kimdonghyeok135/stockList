@@ -9,7 +9,7 @@ export interface StockQuote {
   timestamp: number;
 }
 
-export interface StockOriginDataProp {
+export interface FinnhubQuote {
   c: number; // current price
   d: number; // price change
   dp: number; // percent change
@@ -26,10 +26,10 @@ export interface StockItem {
   data: StockQuote;
 }
 
-export interface StockOriginDataItem {
+export interface FinnhubQuoteItem {
   id: number;
   symbol: string;
-  data: StockOriginDataProp;
+  data: FinnhubQuote;
 }
 
 export type StockViewMode = "all" | "liked";

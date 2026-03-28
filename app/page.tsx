@@ -8,8 +8,9 @@ import { getStocks } from "@/lib/services/getStocks";
 import type { StockItem } from "@/types/stock";
 import { useLikelist } from "./store/likelist";
 import { StockSearchModal } from "@/components/stock/StockSearchModal";
-import { StockAllorLiked } from "@/components/stock/StockAllorLiked";
+
 import { StockSort } from "@/components/stock/StockSort";
+import { StockViewModeTabs } from "@/components/stock/StockAllorLiked";
 
 export default function HomePage() {
   const [searchOpenModal, setSearchOpenModal] = useState(false);
@@ -31,7 +32,7 @@ export default function HomePage() {
     viewMode,
     setViewMode,
     isAscending,
-    setisAscending,
+    setIsAscending,
     sortState,
     setSortState,
     more,
@@ -60,10 +61,10 @@ export default function HomePage() {
           Search
         </button>
       </div>
-      <StockAllorLiked setViewMode={setViewMode} viewMode={viewMode} />
+      <StockViewModeTabs setViewMode={setViewMode} viewMode={viewMode} />
       <StockSort
         setSortState={setSortState}
-        setisAscending={setisAscending}
+        setIsAscending={setIsAscending}
         sortState={sortState}
         isAscending={isAscending}
       />
