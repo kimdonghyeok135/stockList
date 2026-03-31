@@ -2,7 +2,7 @@
 
 import { NewsTopProps } from "@/types/news";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRight, CloudAlert } from "lucide-react";
+import { ChevronRight, CloudAlert, RotateCw } from "lucide-react";
 
 export default function News({ symbol }: { symbol: string }) {
   const getNewsData = async () => {
@@ -16,11 +16,15 @@ export default function News({ symbol }: { symbol: string }) {
   const {
     data: newsQueryData,
     isLoading,
+    isFetching,
     error,
+    refetch,
   } = useQuery<NewsTopProps>({
     queryKey: ["news", symbol],
     queryFn: getNewsData,
     refetchInterval: 1e6,
+    retry: 2,
+    retryDelay: 1e4,
   });
   return (
     <div className="mt-4 rounded-3xl bg-white p-4 shadow-lg">
@@ -50,14 +54,24 @@ export default function News({ symbol }: { symbol: string }) {
           </div>
         </>
       ) : error ? (
-        <div className="max-w-md p-6 bg-white rounded-2xl border border-red-50/50 shadow-sm flex flex-col items-center justify-center text-center">
-          <CloudAlert className="h-10 w-10 text-[#ee1111]" />
-          <h3 className="text-base font-bold text-gray-900 mb-1">뉴스를 불러올 수 없어요</h3>
-          <p className="text-sm text-gray-500 mb-5">
-            네트워크 연결이 불안정하거나
-            <br />
-            잠시 후 다시 시도해 주세요.
-          </p>
+        <div className="max-w-md rounded-2xl border border-red-100 bg-white p-6 text-center shadow-sm">
+          <div className="flex flex-col items-center">
+            <CloudAlert className="h-10 w-10 text-red-500" />
+            <h3 className="mt-3 text-base font-bold text-gray-900">뉴스를 불러오지 못했어요</h3>
+            <p className="mt-1 text-sm text-gray-500">
+              네트워크 상태를 확인한 뒤 다시 시도해 주세요.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => refetch()}
+              disabled={isFetching}
+              className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#4fd1c5] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#38b2ac] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <RotateCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
+              {isFetching ? "다시 불러오는 중..." : "다시 시도"}
+            </button>
+          </div>
         </div>
       ) : (
         <>

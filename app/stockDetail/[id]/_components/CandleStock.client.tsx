@@ -10,6 +10,7 @@ import {
   type IChartApi,
   type UTCTimestamp,
 } from "lightweight-charts";
+import { RotateCw } from "lucide-react";
 
 type Props = {
   symbol: string;
@@ -60,11 +61,15 @@ export default function CandleStock({ symbol }: Props) {
   const {
     data: candleResponse,
     isLoading,
+    isFetching,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["candle", symbol, range],
     queryFn: getCandleData,
-    refetchInterval: 300000,
+    refetchInterval: 3e5,
+    retry: 2,
+    retryDelay: 1e4,
   });
   const candles = useMemo<CandlestickData[]>(() => {
     const result = candleResponse?.chart?.result?.[0];
@@ -170,9 +175,22 @@ export default function CandleStock({ symbol }: Props) {
             Loading chart...
           </div>
         ) : error ? (
-          <div className="h-[360px] flex items-center justify-center text-sm text-rose-500">
-            차트 데이터를 불러오지 못했습니다.
-          </div>
+          <>
+            <div className="h-[360px] flex items-center justify-center text-sm text-rose-500">
+              차트 데이터를 불러오지 못했습니다.
+            </div>
+            <div className="flex items-center justify-center mt-2">
+              <button
+                type="button"
+                onClick={() => refetch()}
+                disabled={isFetching}
+                className="inline-flex items-center gap-2 rounded-full bg-[#4fd1c5] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#38b2ac] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <RotateCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
+                {isFetching ? "다시 불러오는 중..." : "다시 시도"}
+              </button>
+            </div>
+          </>
         ) : candles.length === 0 ? (
           <div className="h-[360px] flex items-center justify-center text-sm text-gray-500">
             표시할 캔들 데이터가 없습니다.
